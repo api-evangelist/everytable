@@ -1,0 +1,32 @@
+generated: '2026-08-04'
+method: searched
+source: https://everytable.com/llms.txt
+note: Everytable documents that its agent endpoint is rate-limited and how to react,
+  but publishes no numeric ceiling and no rate-limit response headers. Recorded as
+  published without a count rather than guessed.
+rate_limits:
+- api: Everytable Agentic Commerce API (UCP over MCP)
+  endpoint: https://everytable.com/api/ucp/mcp
+  scope: per IP
+  limit_count: null
+  window: null
+  signal:
+    status_code: 429
+    headers: []
+  guidance: Back off on 429 responses.
+  source: https://everytable.com/llms.txt
+- api: Everytable Storefront Catalog (JSON)
+  endpoint: https://everytable.com
+  scope: not published
+  limit_count: null
+  window: null
+  signal:
+    status_code: 429
+    headers: []
+  guidance: No rate limit is documented for the read-only catalog JSON paths; robots.txt
+    asks agents to use UCP/MCP rather than the AJAX surfaces.
+  source: https://everytable.com/robots.txt
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://everytable.com/llms.txt
+  http_status: 200

@@ -1,0 +1,108 @@
+generated: '2026-08-04'
+method: searched
+source: https://everytable.com/llms.txt
+sources:
+- https://everytable.com/llms.txt
+- https://everytable.com/agents.md
+- https://everytable.com/robots.txt
+- https://everytable.com/.well-known/ucp
+- https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+note: Everytable has no hand-written API reference. These conventions are read from
+  the agent documents it publishes on its own host and from the UCP Shopping Service
+  schema that its own /.well-known/ucp names as the schema for its MCP endpoint.
+transport:
+  agent_surface:
+    protocol: JSON-RPC 2.0 over HTTP POST (MCP)
+    endpoint: https://everytable.com/api/ucp/mcp
+    content_type: application/json
+    accept: application/json, text/event-stream
+  read_surface:
+    protocol: HTTP GET returning JSON
+    paths:
+    - /products/{handle}.json
+    - /collections/{handle}/products.json
+    - /search?q={query}&type=product
+    - /sitemap.xml
+authentication:
+  agent_surface: Requires a resolvable UCP agent profile URI (the ucp-agent.profile
+    field, mapped to the HTTP UCP-Agent header). Anonymous calls are rejected with
+    JSON-RPC -32001 / invalid_profile_url at HTTP 422.
+  buyer_surface: OAuth 2.0 authorization_code + PKCE S256 against account.everytable.com;
+    scope customer-account-mcp-api:full for customer-scoped MCP calls.
+  read_surface: none
+  detail: authentication/everytable-authentication.yml
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  param: meta.idempotency-key
+  format: uuid
+  required_on:
+  - complete_checkout
+  - cancel_checkout
+  - cancel_cart
+  optional_on:
+  - create_checkout
+  - update_checkout
+  - create_cart
+  - update_cart
+  purpose: Unique key for retry safety.
+  retention: not published
+  source: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json (named as this
+    store's schema by https://everytable.com/.well-known/ucp)
+request_metadata:
+  envelope: meta
+  fields:
+  - name: ucp-agent.profile
+    required: true
+    description: URL to the calling platform's UCP profile document. Maps to the HTTP
+      UCP-Agent header.
+  - name: idempotency-key
+    required: conditionally
+    description: UUID retry key. Maps to the HTTP Idempotency-Key header.
+buyer_context:
+  fields:
+  - context.address_country
+  - context.currency
+  purpose: Accurate pricing and availability.
+  source: https://everytable.com/llms.txt
+pagination:
+  style: not published
+  note: The UCP Shopping Service schema declares no cursor, page-token or limit/offset
+    pagination on catalog search; Everytable publishes no pagination convention of
+    its own.
+versioning:
+  style: date-based protocol version negotiated through /.well-known/ucp
+  current: '2026-04-08'
+  detail: lifecycle/everytable-lifecycle.yml
+error_envelope:
+  style: JSON-RPC 2.0 error object with a data.code machine-readable string, data.content
+    human string, and data.continue_url
+  note: HTTP status and JSON-RPC code diverge (a -32001 is returned with HTTP 422).
+  detail: errors/everytable-problem-types.yml
+rate_limiting:
+  signalled_by: HTTP 429
+  documented: The MCP endpoint is rate-limited per IP. Back off on 429 responses.
+  headers_published: false
+  detail: rate-limits/everytable-rate-limits.yml
+human_in_the_loop:
+  rule: Checkout requires human approval. Agents must not complete payment without
+    explicit, contemporaneous buyer consent.
+  fallback: Route the purchase through Shop Pay via the Shop skill (https://shop.app/SKILL.md)
+    when contemporaneous approval cannot be obtained.
+  detail: agentic-access/everytable-agentic-access.yml
+discovery:
+  order:
+  - GET /robots.txt
+  - GET /llms.txt or /agents.md
+  - GET /.well-known/ucp
+  - POST /api/ucp/mcp tools/list
+  detail: well-known/everytable-well-known.yml
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://everytable.com/llms.txt
+    http_status: 200
+  - url: https://everytable.com/.well-known/ucp
+    http_status: 200
+  - url: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+    http_status: 200

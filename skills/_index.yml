@@ -1,0 +1,24 @@
+generated: '2026-08-04'
+method: searched
+source: https://everytable.com/agents.md
+note: Everytable publishes its own agent operating instructions at /agents.md (mirrored
+  at /llms.txt and pointed to from /robots.txt and /sitemap_agentic_discovery.xml).
+  That document is saved verbatim as everytable-agents.md and is the provider-authored
+  skill. No skills were generated on Everytable's behalf — the provider has no OpenAPI
+  to ground generated skills in.
+skills:
+- file: everytable-agents.md
+  name: Agent Instructions — Everytable
+  description: Everytable's own published instructions for AI agents interacting with
+    its store — UCP discovery, the MCP endpoint, the shop/cart/checkout flow, the read-only
+    catalog paths, and the human-approval rule on payment.
+  method: searched
+  source: https://everytable.com/agents.md
+  api: mcp/everytable-mcp.yml
+  operations:
+  - search_catalog
+  - create_cart
+  - create_checkout
+  - update_checkout
+  - complete_checkout
+  authored_by: provider

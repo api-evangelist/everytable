@@ -1,0 +1,51 @@
+generated: '2026-08-04'
+method: searched
+source: https://everytable.com/.well-known/oauth-authorization-server
+docs: https://everytable.com/.well-known/openid-configuration
+note: Derived from the live authorization-server metadata Everytable's storefront serves
+  anonymously (scopes_supported), not from an OpenAPI securityScheme — Everytable publishes
+  no OpenAPI. Scope descriptions are the standard OIDC meanings; Everytable publishes
+  no scope reference page of its own.
+schemes:
+- name: ShopifyCustomerAccountOIDC
+  source: well-known/everytable-oauth-authorization-server.json
+  issuer: https://shopify.com/authentication/69951324217
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://account.everytable.com/authentication/oauth/authorize
+    tokenUrl: https://account.everytable.com/authentication/oauth/token
+    pkce: S256
+scopes:
+- scope: openid
+  description: Request an OpenID Connect ID token identifying the signed-in Everytable
+    customer.
+  flows:
+  - authorizationCode
+  sources:
+  - well-known/everytable-oauth-authorization-server.json
+- scope: email
+  description: Release the customer's email address and email_verified claim.
+  flows:
+  - authorizationCode
+  sources:
+  - well-known/everytable-oauth-authorization-server.json
+- scope: customer-account-api:full
+  description: Full access to the Shopify Customer Account API on behalf of the signed-in
+    Everytable customer — orders, addresses, subscriptions and profile.
+  flows:
+  - authorizationCode
+  sources:
+  - well-known/everytable-oauth-authorization-server.json
+- scope: customer-account-mcp-api:full
+  description: Full access to the customer-scoped MCP API on behalf of the signed-in
+    customer — the buyer-authenticated counterpart to the anonymous UCP/MCP commerce
+    endpoint at /api/ucp/mcp.
+  flows:
+  - authorizationCode
+  sources:
+  - well-known/everytable-oauth-authorization-server.json
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://everytable.com/.well-known/oauth-authorization-server
+  http_status: 200
+  content_type: application/json

@@ -1,18 +1,94 @@
 aid: everytable
 name: Everytable
-description: 'Everytable is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Everytable is a Los Angeles-based food company and social enterprise
+  founded in 2015 by Sam Polk that sells scratch-cooked, ready-to-eat meals — bowls,
+  salads, wraps, sandwiches, soups, kids meals and breakfast — through grab-and-go
+  storefronts across Southern California and New York City, a home meal-delivery subscription,
+  and food-service programs for workplaces (Everytable@WORK) and K-12 schools. Its
+  variable-pricing model sets meal prices against the income level of each neighborhood
+  it serves. Everytable runs no traditional developer program; its machine-readable
+  surface is its Shopify storefront, which publishes agent-facing instructions at /agents.md
+  and /llms.txt and implements the Universal Commerce Protocol (UCP) over an MCP endpoint
+  for agent-driven catalog search, cart, and buyer-approved checkout, backed by Shopify
+  Customer Account OAuth 2.0 / OpenID Connect.'
+image: https://everytable.com/cdn/shop/files/Favicon.png?v=1750436309
 url: https://raw.githubusercontent.com/api-evangelist/everytable/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-harvest-url: https://forgeglobal.com/everytable_stock/
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
 - Company
-apis: []
+- Food
+- Restaurants
+- Meal Delivery
+- Ecommerce
+- Agentic Commerce
+- Shopify
+- Social Enterprise
+- Nutrition
+- Subscriptions
+apis:
+- name: Everytable Agentic Commerce API (UCP over MCP)
+  description: 'Everytable''s Shopify storefront implements the Universal Commerce
+    Protocol (UCP) and exposes it to agents as a Model Context Protocol (MCP) endpoint
+    at https://everytable.com/api/ucp/mcp. The store advertises the endpoint in its
+    own /robots.txt, /llms.txt and /agents.md, and describes its capabilities at /.well-known/ucp.
+    Declared capabilities cover catalog search and lookup, cart, checkout, fulfillment,
+    discount and order, with Shop Pay, Shopify card and Google Pay payment handlers.
+    Payment completion requires contemporaneous human approval.'
+  humanURL: https://everytable.com/agents.md
+  baseURL: https://everytable.com/api/ucp/mcp
+  tags:
+  - MCP
+  - Agentic Commerce
+  - UCP
+  - Ecommerce
+  properties:
+  - type: MCPServer
+    url: mcp/everytable-mcp.yml
+  - type: Documentation
+    url: https://everytable.com/agents.md
+- name: Everytable Storefront Catalog (JSON)
+  description: 'Read-only product and collection JSON surfaced by the Everytable Shopify
+    storefront and documented by Everytable in its own /llms.txt: product JSON at /products/{handle}.json,
+    collection product JSON at /collections/{handle}/products.json, and product search
+    at /search?q={query}&type=product. No authentication is required for these read
+    paths; Everytable directs transacting agents to the UCP/MCP endpoint instead.'
+  humanURL: https://everytable.com/llms.txt
+  baseURL: https://everytable.com
+  tags:
+  - Catalog
+  - Products
+  - Ecommerce
+  properties:
+  - type: LLMsTxt
+    url: llms/everytable-llms.txt
+- name: Everytable Customer Account (OAuth 2.0 / OpenID Connect)
+  description: 'Shopify Customer Accounts authorization server for Everytable, discoverable
+    anonymously at https://everytable.com/.well-known/openid-configuration and /.well-known/oauth-authorization-server.
+    Issuer https://shopify.com/authentication/69951324217, authorization and token
+    endpoints on account.everytable.com, authorization_code + refresh_token + jwt-bearer
+    grants, PKCE S256 required, RS256 ID tokens, and four published scopes including
+    customer-account-mcp-api:full.'
+  humanURL: https://everytable.com/.well-known/openid-configuration
+  baseURL: https://account.everytable.com
+  tags:
+  - OAuth
+  - OpenID Connect
+  - Authentication
+  properties:
+  - type: Authentication
+    url: authentication/everytable-authentication.yml
+  - type: OAuthScopes
+    url: scopes/everytable-scopes.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +96,48 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/everytable_stock/
+  url: https://everytable.com/
+- type: Documentation
+  url: https://everytable.com/agents.md
+- type: Blog
+  url: https://everytable.com/blogs/news
+- type: Support
+  url: https://everytable.com/pages/contact
+- type: Pricing
+  url: https://everytable.com/pages/subscriptions
+- type: Login
+  url: https://everytable.com/account/login
+- type: TermsOfService
+  url: https://everytable.com/policies/terms-of-service
+- type: PrivacyPolicy
+  url: https://everytable.com/policies/privacy-policy
+- type: RefundPolicy
+  url: https://everytable.com/policies/refund-policy
+- type: LLMsTxt
+  url: llms/everytable-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/everytable-mcp.yml
+- type: AgenticAccess
+  url: agentic-access/everytable-agentic-access.yml
+- type: WellKnown
+  url: well-known/everytable-well-known.yml
+- type: Authentication
+  url: authentication/everytable-authentication.yml
+- type: OAuthScopes
+  url: scopes/everytable-scopes.yml
+- type: Conformance
+  url: conformance/everytable-conformance.yml
+- type: ErrorCatalog
+  url: errors/everytable-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/everytable-lifecycle.yml
+- type: Conventions
+  url: conventions/everytable-conventions.yml
+- type: Idempotency
+  url: conventions/everytable-conventions.yml
+- type: RateLimits
+  url: rate-limits/everytable-rate-limits.yml
+- type: DomainSecurity
+  url: security/everytable-domain-security.yml

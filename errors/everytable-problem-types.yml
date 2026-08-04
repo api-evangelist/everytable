@@ -1,0 +1,60 @@
+generated: '2026-08-04'
+method: probed
+source: https://everytable.com/api/ucp/mcp
+format: jsonrpc-2.0
+note: Everytable publishes no OpenAPI and no error reference page. The entries below
+  are error responses actually observed against its live endpoints, plus the one error
+  condition Everytable documents in its own llms.txt. Nothing here is invented.
+envelope:
+  transport: JSON-RPC 2.0 over HTTP POST
+  shape:
+    jsonrpc: '2.0'
+    id: <request id>
+    error:
+      code: <int>
+      message: <string>
+      data:
+        code: <machine-readable string>
+        content: <human-readable string>
+        continue_url: <url a human can open to resolve>
+  note: The JSON-RPC error code and the HTTP status differ — a -32001 UCP error is
+    returned with HTTP 422.
+problems:
+- code: -32001
+  http_status: 422
+  data_code: invalid_profile_url
+  title: UCP discovery failed
+  detail: 'Unable to fetch agent profile: Missing profile uri'
+  remediation: Present a resolvable UCP agent profile URI on the request. Anonymous
+    calls without an agent profile cannot list or invoke tools.
+  observed: true
+  observed_on: '2026-08-04'
+  source_operation: https://everytable.com/api/ucp/mcp#tools/list
+- http_status: 429
+  title: Rate limited
+  detail: The MCP endpoint is rate-limited per IP.
+  remediation: Back off on 429 responses.
+  observed: false
+  documented: true
+  source: https://everytable.com/llms.txt
+- http_status: 404
+  title: Not found
+  detail: Storefront returns 404 for unknown paths; JSON endpoints (/openapi.json,
+    /swagger.json) return an empty application/json body while HTML paths return the
+    themed 404 page.
+  observed: true
+  observed_on: '2026-08-04'
+  source_operation: https://everytable.com/
+- http_status: 406
+  title: Not acceptable
+  detail: Account paths (/account/login, /account/register) return 406 to clients that
+    do not send a browser-style Accept header; with Accept text/html they 200 and redirect
+    to account.everytable.com.
+  observed: true
+  observed_on: '2026-08-04'
+  source_operation: https://everytable.com/account/login
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://everytable.com/api/ucp/mcp
+  http_status: 422
+  content_type: application/json

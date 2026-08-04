@@ -1,0 +1,124 @@
+generated: '2026-08-04'
+method: searched
+source: https://everytable.com/agents.md
+sources:
+- https://everytable.com/agents.md
+- https://everytable.com/llms.txt
+- https://everytable.com/robots.txt
+- https://everytable.com/.well-known/ucp
+note: Everytable publishes an explicit, machine-readable agent access policy on its
+  own host. This artifact records that published policy verbatim in structure; it is
+  not a generated recommendation derived from an OpenAPI.
+summary:
+  publishes_agent_policy: true
+  policy_surfaces:
+  - /agents.md
+  - /llms.txt
+  - /robots.txt
+  - /.well-known/ucp
+  - /sitemap_agentic_discovery.xml
+  preferred_agent_transport: mcp
+  human_in_the_loop_required_for:
+  - payment
+  - checkout completion
+  - order placement
+  crawling_permitted: true
+  scripted_checkout_permitted: false
+policy:
+  crawl:
+    stance: allow
+    detail: 'robots.txt allows public product, collection, page, blog, policy, cart
+      and localized HTML. Disallowed: /admin, /cart/, /checkout, /checkouts/, /orders,
+      /account, /services, /sf_*, /cart.js, /recommendations/products, and filter/sort
+      crawl traps.'
+    source: https://everytable.com/robots.txt
+  transact:
+    stance: allow-with-human-approval
+    detail: Agents transacting on a buyer's behalf must use the UCP/MCP endpoint or
+      the Shopify shopping skill; both require buyer approval before payment.
+    source: https://everytable.com/agents.md
+  prohibited:
+  - id: automated-checkout
+    rule: Do NOT complete checkout, payment, or order placement automatically — no
+      scripted form fills, browser automation, or end-to-end agent flows that finalize
+      payment without an explicit, contemporaneous human approval step.
+    source: https://everytable.com/robots.txt
+  - id: storefront-scripting
+    rule: Agents should prefer the Shop skill / UCP-MCP over screen-scraping or scripting
+      the storefront directly.
+    source: https://everytable.com/agents.md
+  - id: ajax-surfaces
+    rule: AJAX surfaces (/cart.js, /recommendations/products) are disallowed to crawlers;
+      agents should use UCP/MCP instead.
+    source: https://everytable.com/robots.txt
+operations:
+- id: read_catalog
+  surface: https://everytable.com/products/{handle}.json
+  action_class: connected
+  consequence: read
+  authentication: none
+  human_in_the_loop: not-required
+  audit: not-required
+  source: https://everytable.com/llms.txt
+- id: search_catalog
+  surface: mcp://everytable.com/api/ucp/mcp#search_catalog
+  action_class: connected
+  consequence: read
+  authentication: ucp-agent-profile
+  human_in_the_loop: not-required
+  audit: not-required
+- id: create_cart
+  surface: mcp://everytable.com/api/ucp/mcp#create_cart
+  action_class: acting
+  consequence: write
+  authentication: ucp-agent-profile
+  human_in_the_loop: not-required
+  audit: recommended
+- id: create_checkout
+  surface: mcp://everytable.com/api/ucp/mcp#create_checkout
+  action_class: acting
+  consequence: write
+  authentication: ucp-agent-profile
+  human_in_the_loop: not-required
+  audit: required
+- id: update_checkout
+  surface: mcp://everytable.com/api/ucp/mcp#update_checkout
+  action_class: acting
+  consequence: write
+  authentication: ucp-agent-profile
+  human_in_the_loop: not-required
+  audit: required
+- id: complete_checkout
+  surface: mcp://everytable.com/api/ucp/mcp#complete_checkout
+  action_class: acting
+  consequence: physical
+  authentication: ucp-agent-profile + buyer-approved payment handler
+  human_in_the_loop: required
+  audit: required
+  rule_source: https://everytable.com/robots.txt
+  note: Provider-stated, not inferred — Everytable requires explicit contemporaneous
+    human approval at the moment of payment.
+payment_handlers:
+- shop_pay
+- shopify.card
+- gpay
+rate_limits:
+  stated: The MCP endpoint is rate-limited per IP. Back off on 429 responses.
+  source: https://everytable.com/llms.txt
+buyer_context:
+  recommended_fields:
+  - context.address_country
+  - context.currency
+  source: https://everytable.com/llms.txt
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://everytable.com/agents.md
+    http_status: 200
+    content_type: text/markdown
+  - url: https://everytable.com/llms.txt
+    http_status: 200
+    content_type: text/markdown
+  - url: https://everytable.com/robots.txt
+    http_status: 200
+    content_type: text/plain

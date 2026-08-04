@@ -1,0 +1,93 @@
+generated: '2026-08-04'
+method: searched
+source: https://everytable.com/.well-known/openid-configuration
+docs: https://everytable.com/.well-known/oauth-authorization-server
+note: Everytable publishes no OpenAPI, so this profile is read from the live, anonymous
+  OAuth/OIDC discovery documents its storefront serves rather than derived from securitySchemes.
+summary:
+  types:
+  - openIdConnect
+  - oauth2
+  - none
+  api_key_in: []
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: ShopifyCustomerAccountOIDC
+  type: openIdConnect
+  openIdConnectUrl: https://everytable.com/.well-known/openid-configuration
+  issuer: https://shopify.com/authentication/69951324217
+  authorization_endpoint: https://account.everytable.com/authentication/oauth/authorize
+  token_endpoint: https://account.everytable.com/authentication/oauth/token
+  end_session_endpoint: https://account.everytable.com/authentication/logout
+  jwks_uri: https://account.everytable.com/authentication/.well-known/jwks.json
+  response_types_supported:
+  - code
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  - urn:ietf:params:oauth:grant-type:jwt-bearer
+  token_endpoint_auth_methods_supported:
+  - client_secret_basic
+  code_challenge_methods_supported:
+  - S256
+  id_token_signing_alg_values_supported:
+  - RS256
+  subject_types_supported:
+  - public
+  claims_supported:
+  - iss
+  - sub
+  - aud
+  - exp
+  - iat
+  - nonce
+  - sid
+  - email
+  - email_verified
+  scopes:
+  - openid
+  - email
+  - customer-account-api:full
+  - customer-account-mcp-api:full
+  sources:
+  - well-known/everytable-openid-configuration.json
+  - well-known/everytable-oauth-authorization-server.json
+- name: BearerToken
+  type: http
+  scheme: bearer
+  description: RFC 9728 protected resource metadata at /.well-known/oauth-protected-resource
+    declares bearer_methods_supported = [header] for the resource https://everytable.com.
+  sources:
+  - well-known/everytable-oauth-protected-resource.json
+- name: Anonymous
+  type: none
+  description: 'The read-only storefront catalog paths Everytable documents in its
+    own llms.txt require no authentication: /products/{handle}.json, /collections/{handle}/products.json,
+    /search?q={query}&type=product, /sitemap.xml.'
+  sources:
+  - llms/everytable-llms.txt
+protected_resource:
+  resource: https://everytable.com
+  authorization_servers:
+  - https://account.everytable.com
+  - https://shopify.com/authentication/69951324217
+  bearer_methods_supported:
+  - header
+agent_endpoint_auth:
+  endpoint: https://everytable.com/api/ucp/mcp
+  observed: 'Anonymous POST tools/list returns HTTP 422 with JSON-RPC error -32001
+    (invalid_profile_url) rather than an OAuth challenge — the gate is a required UCP
+    agent profile URI, not a bearer token. Authenticated buyer-scoped operations map
+    to the customer-account-mcp-api:full scope above.'
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://everytable.com/.well-known/openid-configuration
+    http_status: 200
+  - url: https://everytable.com/.well-known/oauth-authorization-server
+    http_status: 200
+  - url: https://everytable.com/.well-known/oauth-protected-resource
+    http_status: 200
+  - url: https://account.everytable.com/authentication/.well-known/jwks.json
+    http_status: 200

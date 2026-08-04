@@ -1,0 +1,79 @@
+generated: '2026-08-04'
+method: searched
+source: live probes of every Everytable host
+hosts:
+- https://everytable.com
+- https://www.everytable.com
+- https://account.everytable.com
+documents:
+- path: /.well-known/ucp
+  host: everytable.com
+  status: 200
+  content_type: application/json
+  file: everytable-ucp.json
+  note: Universal Commerce Protocol merchant profile — supported versions 2026-04-08
+    and 2026-01-23, MCP transport endpoint, shopping capabilities, payment handlers.
+- path: /.well-known/openid-configuration
+  host: everytable.com
+  status: 200
+  content_type: application/json
+  file: everytable-openid-configuration.json
+  note: Shopify Customer Accounts OIDC discovery document.
+- path: /.well-known/oauth-authorization-server
+  host: everytable.com
+  status: 200
+  content_type: application/json
+  file: everytable-oauth-authorization-server.json
+  note: RFC 8414 authorization server metadata (identical payload to the OIDC document).
+- path: /.well-known/oauth-protected-resource
+  host: everytable.com
+  status: 200
+  content_type: application/json
+  file: everytable-oauth-protected-resource.json
+  note: RFC 9728 protected resource metadata naming account.everytable.com and shopify.com
+    as authorization servers.
+- path: /authentication/.well-known/jwks.json
+  host: account.everytable.com
+  status: 200
+  content_type: application/json
+  file: everytable-jwks.json
+  note: JSON Web Key Set for RS256 ID token verification.
+- path: /.well-known/openid-configuration
+  host: account.everytable.com
+  status: 200
+  content_type: application/json
+- path: /.well-known/oauth-protected-resource
+  host: account.everytable.com
+  status: 200
+  content_type: application/json
+- path: /robots.txt
+  host: everytable.com
+  status: 200
+  content_type: text/plain
+  file: everytable-robots.txt
+  note: Carries explicit agent policy — points agents at /agents.md, /.well-known/ucp
+    and the UCP/MCP endpoint, and forbids automated checkout completion.
+- path: /.well-known/security.txt
+  host: everytable.com
+  status: 404
+- path: /.well-known/api-catalog
+  host: everytable.com
+  status: 404
+- path: /.well-known/ai-plugin.json
+  host: everytable.com
+  status: 404
+- path: /.well-known/agent-card.json
+  host: everytable.com
+  status: 404
+- path: /.well-known/agent.json
+  host: everytable.com
+  status: 404
+- path: /.well-known/agent-card.json
+  host: account.everytable.com
+  status: 404
+- path: /.well-known/agent.json
+  host: account.everytable.com
+  status: 404
+x-evidence:
+  fetched: '2026-08-04'
+  notes: api.everytable.com, shop.everytable.com and docs.everytable.com do not resolve.

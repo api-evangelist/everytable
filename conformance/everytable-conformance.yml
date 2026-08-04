@@ -1,0 +1,97 @@
+generated: '2026-08-04'
+method: searched
+source: live probes of everytable.com discovery documents
+note: Standards asserted from documents Everytable actually serves. Everytable publishes
+  no compliance program or certification list of its own, so no Compliance pointer
+  is emitted.
+standards:
+- id: ucp-2026-04-08
+  name: Universal Commerce Protocol 2026-04-08
+  conforms: true
+  evidence: /.well-known/ucp declares version 2026-04-08 (and 2026-01-23) with the
+    dev.ucp.shopping service over MCP transport
+  source: https://everytable.com/.well-known/ucp
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: JSON-RPC 2.0 MCP endpoint at /api/ucp/mcp declared as transport mcp in
+    the UCP profile; responds with well-formed JSON-RPC error objects
+  source: https://everytable.com/api/ucp/mcp
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence: authorization_code + refresh_token + jwt-bearer grants published in authorization-server
+    metadata
+  source: well-known/everytable-oauth-authorization-server.json
+- id: oidc
+  name: OpenID Connect Core
+  conforms: true
+  evidence: /.well-known/openid-configuration with issuer, jwks_uri, RS256 id_token
+    signing and standard claims
+  source: well-known/everytable-openid-configuration.json
+- id: rfc8414
+  name: RFC 8414 OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns 200 with issuer + endpoint
+    metadata
+  source: well-known/everytable-oauth-authorization-server.json
+- id: rfc9728
+  name: RFC 9728 OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence: /.well-known/oauth-protected-resource returns resource + authorization_servers
+    + bearer_methods_supported
+  source: well-known/everytable-oauth-protected-resource.json
+- id: rfc7636
+  name: RFC 7636 PKCE
+  conforms: true
+  evidence: code_challenge_methods_supported = [S256]
+  source: well-known/everytable-oauth-authorization-server.json
+- id: rfc7523
+  name: RFC 7523 JWT Bearer grant
+  conforms: true
+  evidence: grant_types_supported includes urn:ietf:params:oauth:grant-type:jwt-bearer
+  source: well-known/everytable-oauth-authorization-server.json
+- id: rfc8615
+  name: RFC 8615 Well-Known URIs
+  conforms: true
+  evidence: five well-known documents served under /.well-known/
+  source: well-known/everytable-well-known.yml
+- id: rfc9309
+  name: RFC 9309 Robots Exclusion Protocol
+  conforms: true
+  evidence: /robots.txt served with agent-specific policy and sitemap declaration
+  source: well-known/everytable-robots.txt
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: /llms.txt served as text/markdown, mirroring /agents.md
+  source: llms/everytable-llms.txt
+- id: sitemaps-0.9
+  name: Sitemaps 0.9
+  conforms: true
+  evidence: /sitemap.xml sitemapindex including sitemap_agentic_discovery.xml
+  source: https://everytable.com/sitemap.xml
+- id: rfc9116
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on everytable.com
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on
+    everytable.com and account.everytable.com
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: no OpenAPI/Swagger document found on any Everytable host after full contract
+    discovery
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: errors are JSON-RPC 2.0 error objects, not application/problem+json
+- id: dnssec
+  name: DNSSEC
+  conforms: false
+  evidence: no DNSSEC on everytable.com (see security/everytable-domain-security.yml)
+x-evidence:
+  fetched: '2026-08-04'
