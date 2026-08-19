@@ -66,18 +66,16 @@ introspection:
   tools_list_attempted: true
   tools_list_status: 422
   tools_list_gated: true
-  gate: 'JSON-RPC error -32001 "UCP discovery failed", data.code invalid_profile_url
-    — the endpoint requires the calling agent to present a resolvable UCP agent profile
-    URI before it will return tools/list. Tool input schemas therefore require an enrolled
-    agent profile to introspect.'
+  gate: JSON-RPC error -32001 "UCP discovery failed", data.code invalid_profile_url — the endpoint requires
+    the calling agent to present a resolvable UCP agent profile URI before it will return tools/list.
+    Tool input schemas therefore require an enrolled agent profile to introspect.
   attempted_on:
   - https://everytable.com/api/ucp/mcp
   - https://q8ffft-xw.myshopify.com/api/ucp/mcp
 tools:
-  note: Tool names and summaries below are taken from the UCP Shopping Service OpenRPC
-    document that Everytable's own /.well-known/ucp names as the schema for this endpoint
-    (https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json). They are not the
-    output of a live tools/list against Everytable, which is gated (see introspection).
+  note: Tool names and summaries below are taken from the UCP Shopping Service OpenRPC document that Everytable's
+    own /.well-known/ucp names as the schema for this endpoint (https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json).
+    They are not the output of a live tools/list against Everytable, which is gated (see introspection).
   source: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
   list:
   - name: search_catalog
@@ -111,8 +109,8 @@ tools:
     description: Update checkout
     capability: dev.ucp.shopping.checkout
   - name: complete_checkout
-    description: Complete checkout and place order — requires contemporaneous human
-      buyer approval of payment
+    description: Complete checkout and place order — requires contemporaneous human buyer approval of
+      payment
     capability: dev.ucp.shopping.checkout
   - name: cancel_checkout
     description: Cancel checkout
@@ -126,3 +124,11 @@ x-evidence:
   discovery_status: 200
   endpoint_url: https://everytable.com/api/ucp/mcp
   endpoint_tools_list_status: 422
+deployment:
+  mode: remote
+  endpoint: https://everytable.com/api/ucp/mcp
+  verified: probed
+  probe: live
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census
