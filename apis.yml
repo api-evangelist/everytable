@@ -27,6 +27,17 @@ modified: '2026-08-04'
 tags:
 - Company
 - Food
+- Restaurant
+- Meal Delivery
+- E-Commerce
+- Agentic Commerce
+- Shopify
+- Social Enterprise
+- Nutrition
+- Subscription
+tags_raw:
+- Company
+- Food
 - Restaurants
 - Meal Delivery
 - Ecommerce
@@ -50,6 +61,11 @@ apis:
   - MCP
   - Agentic Commerce
   - UCP
+  - E-Commerce
+  tags_raw:
+  - MCP
+  - Agentic Commerce
+  - UCP
   - Ecommerce
   properties:
   - type: MCPServer
@@ -66,6 +82,10 @@ apis:
   baseURL: https://everytable.com
   tags:
   - Catalog
+  - Product
+  - E-Commerce
+  tags_raw:
+  - Catalog
   - Products
   - Ecommerce
   properties:
@@ -81,6 +101,9 @@ apis:
   humanURL: https://everytable.com/.well-known/openid-configuration
   baseURL: https://account.everytable.com
   tags:
+  - Authentication
+  - OpenID Connect
+  tags_raw:
   - OAuth
   - OpenID Connect
   - Authentication
