@@ -22,6 +22,21 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  - scopes
+  - rate-limits
+  - security
+  generated: '2026-09-02'
+  method: derived
 image: https://everytable.com/cdn/shop/files/Favicon.png?v=1750436309
 url: https://raw.githubusercontent.com/api-evangelist/everytable/refs/heads/main/apis.yml
 x-type: company
