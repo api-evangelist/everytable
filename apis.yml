@@ -98,6 +98,9 @@ apis:
     url: mcp/everytable-mcp.yml
   - type: Documentation
     url: https://everytable.com/agents.md
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 - name: Everytable Storefront Catalog (JSON)
   description: 'Read-only product and collection JSON surfaced by the Everytable Shopify
     storefront and documented by Everytable in its own /llms.txt: product JSON at /products/{handle}.json,
@@ -105,7 +108,6 @@ apis:
     at /search?q={query}&type=product. No authentication is required for these read
     paths; Everytable directs transacting agents to the UCP/MCP endpoint instead.'
   humanURL: https://everytable.com/llms.txt
-  baseURL: https://everytable.com
   tags:
   - Catalog
   - Product
@@ -117,6 +119,9 @@ apis:
   properties:
   - type: LLMsTxt
     url: llms/everytable-llms.txt
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: storefront-json
 - name: Everytable Customer Account (OAuth 2.0 / OpenID Connect)
   description: 'Shopify Customer Accounts authorization server for Everytable, discoverable
     anonymously at https://everytable.com/.well-known/openid-configuration and /.well-known/oauth-authorization-server.
@@ -138,6 +143,9 @@ apis:
     url: authentication/everytable-authentication.yml
   - type: OAuthScopes
     url: scopes/everytable-scopes.yml
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: customer-account
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
