@@ -64,5 +64,116 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Everytable is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/everytable_stock/
+Everytable is a Los Angeles-based food company and social enterprise founded in 2015 by Sam Polk that sells scratch-cooked, ready-to-eat meals — bowls, salads, wraps, sandwiches, soups, kids meals and breakfast — through grab-and-go storefronts across Southern California and New York City, a home meal-delivery subscription, and food-service programs for workplaces (Everytable@WORK) and K-12 schools. Its variable-pricing model sets meal prices against the income level of each neighborhood it serves. Everytable runs no traditional developer program; its machine-readable surface is its Shopify storefront, which publishes agent-facing instructions at /agents.md and /llms.txt and implements the Universal Commerce Protocol (UCP) over an MCP endpoint for agent-driven catalog search, cart, and buyer-approved checkout, backed by Shopify Customer Account OAuth 2.0 / OpenID Connect.
+
+**Areas:** Company · Food · Restaurant · Meal Delivery · E-Commerce · Agentic Commerce · Shopify · Social Enterprise · Nutrition · Subscription
+
+## Everytable on APIs.io
+
+Everything profiled for Everytable is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/everytable/](https://apis.io/providers/everytable/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [Everytable Agentic Commerce API (UCP over MCP)](https://apis.io/apis/everytable/everytable-agentic-commerce-api-ucp-over-mcp/) — Everytable's Shopify storefront implements the Universal Commerce Protocol (UCP) and exposes it to agents as a Model Context Protocol (MCP) endpoint at…
+- [Everytable Storefront Catalog (JSON)](https://apis.io/apis/everytable/everytable-storefront-catalog-json/) — Read-only product and collection JSON surfaced by the Everytable Shopify storefront and documented by Everytable in its own /llms.txt: product JSON at…
+- [Everytable Customer Account (OAuth 2.0 / OpenID Connect)](https://apis.io/apis/everytable/everytable-customer-account-oauth-20-openid-connect/) — Shopify Customer Accounts authorization server for Everytable, discoverable anonymously at https://everytable.com/.well-known/openid-configuration and…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [everytable-ucp-shopping](https://apis.io/servers/everytable/everytable-ucp-shopping/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Everytable Agentic Access](https://apis.io/agentic-access/everytable/everytable-agentic-access/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Everytable Authentication](https://apis.io/security/everytable/everytable-authentication/)
+- [Everytable Domain Security](https://apis.io/security/everytable/everytable-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Everytable Scopes](https://apis.io/scopes/everytable/everytable-scopes/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Everytable Rate Limits](https://apis.io/rate-limits/everytable/everytable-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://everytable.com/)
+- [Documentation](https://everytable.com/agents.md)
+- [Pricing](https://everytable.com/pages/subscriptions)
+- [Support](https://everytable.com/pages/contact)
+- [Blog](https://everytable.com/blogs/news)
+- [Terms of service](https://everytable.com/policies/terms-of-service)
+- [Privacy policy](https://everytable.com/policies/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 27.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 38.2 |
+
+**Agent readiness 25.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | yes |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/everytable/](https://apis.io/providers/everytable/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Everytable: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/everytable/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
